@@ -1,0 +1,104 @@
+/* src/styles.css */
+
+/* Styling umum */
+body {
+  font-family: 'Arial', sans-serif; 
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* Warna lebih kalem */ 
+  color: #333; 
+  text-align: center; 
+  margin: 0; 
+  padding: 0;
+}
+
+header {
+  background-color: #4a00e0;
+  padding: 20px;
+}
+
+nav a {
+  color: #6a1b9a; 
+  margin: 0 15px; 
+  text-decoration: none; 
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Tambahkan atau perbarui gaya CSS untuk elemen tulisan INFORMATIKA */
+.informatika-button {
+  background-color: #6a11cb;
+  border: none;
+  padding: 10px; /* Menambahkan ruang di dalam kotak */
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-right: 10px; /* Opsional: menambahkan ruang di luar kotak jika diperlukan */
+}
+
+.informatika-button:hover {
+  background-color: #2575fc;
+}
+
+.datetime { 
+  font-size: 14px; /* Ukuran teks yang nyaman dilihat */ 
+  color: #333; 
+  position: fixed; 
+  bottom: 10px; 
+  left: 10px; 
+  background: rgba(255, 255, 255, 0.8); 
+  padding: 5px 10px; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+/* Styling tabel data mahasiswa */
+.table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background-color: #4a00e0;
+  color: white;
+  font-weight: bold;
+}
+
+.table td {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}
+
+/* Styling khusus untuk judul agar warna teks menjadi hitam */
+h1, h2 {
+  color: #000000;
+}
+
+
+
+  
+  @media (max-width: 600px) { 
+    header { padding: 10px; 
+    } 
+    nav a { margin: 0 5px; 
+    } 
+    button { padding: 5px 10px; 
+    } 
+}
