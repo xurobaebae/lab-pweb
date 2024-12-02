@@ -1,9 +1,13 @@
 <?php
-//untuk koneksi database
-$host = "localhost";//nama host database
-$username = "root";//Nama user database
-$password = "";//katasandi databases
-$database = "act1";// nama database
 
-$koneksi = mysqli_connect($host, $username, $password,$database);
+$server = "localhost";
+$username = "root"; // Sesuaikan dengan user database Anda
+$password = ""; // Sesuaikan dengan password database Anda
+$database = "act1"; // Nama database Anda
+
+$koneksi = mysqli_connect($server, $username, $password, $database);
+
+if (!$koneksi) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
 ?>

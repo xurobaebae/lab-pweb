@@ -1,6 +1,8 @@
+//blok 1
 import React from "react";
 import Layout from "./Layout";
 
+//blok2
 const HomePage = () => {
   return (
     <Layout>
@@ -23,4 +25,5 @@ const HomePage = () => {
   );
 };
 
+//blok3
 export default HomePage;
