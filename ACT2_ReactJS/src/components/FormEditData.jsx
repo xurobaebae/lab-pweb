@@ -1,36 +1,57 @@
-import React, { useState } from "react";
+//blok 1
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-export default function FormTambahData() {
-  const [npm, setNpm] = useState("");
-  const [nama, setNama] = useState("");
-  const [kelas, setKelas] = useState("");
-  const [msg, setMsg] = useState(""); // Menyimpan pesan kesalahan atau sukses
-  const [isError, setIsError] = useState(false);
+//blok 2
+function FormEditData() {
+  const [npm1, setNpm] = useState("");
+  const [nama1, setNama] = useState("");
+  const [kelas1, setKelas] = useState("");
+  const {id} = useParams();
 
-  const saveMahasiswa = async (e) => {
-    e.preventDefault();
+    useEffect(() => {
+      const getData = async () => {
+        try{
+          const response = await axios.get(
+            `http://localhost/PWEB/lab-pweb/ACT1_PHP/read_by_id.php/${id}`
+          );
 
-    const formData = new FormData();
-    formData.append("npm", npm);
-    formData.append("nama", nama);
-    formData.append("kelas", kelas);
+          setNpm(response.data.data.npm);
+          setNama(response.data.data.nama);
+          setKelas(response.data.data.kelas);
+        } catch(error){
+          console.error("Error: " + error); 
+        }
+      };
+      getData();
+    }, [id]);
 
-    try {
-      await axios.post("http://localhost/PWEB/lab-pweb/ACT1_PHP/create.php", formData);
-      window.location.href = "/data_mhs";
-    } catch (error) {
-      if (error.response) {
-        window.location.href = "/tambah_data";
-        alert("Data Gagal Ditambahkan");
+//blok 3
+    const updateMahasiswa = async (e) => {
+      e.preventDefault();
+      try {
+        await axios.put(`http://localhost/PWEB/lab-pweb/ACT1_PHP/update.php/${id}`, {
+          npm : npm1,
+          nama : nama1,
+          kelas : kelas1, 
+        });
+
+        window.location.href = '/data_mhs'
+      } catch (error) {
+        if(error.response){
+          window.location.href = '/'
+        }
       }
-    }
-  };
-
+    };
+//blok 4
   return (
     <div className="flex w-full justify-center items-center">
       <div className="p-4 lg:w-1/2">
-        <form onSubmit={saveMahasiswa} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form
+          onSubmit={updateMahasiswa}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
           {/* KOLOM NPM */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="npm">
@@ -41,7 +62,7 @@ export default function FormTambahData() {
               id="npm"
               type="text"
               placeholder="NPM"
-              value={npm}
+              value={npm1 || ""}
               onChange={(e) => setNpm(e.target.value)}
             />
           </div>
@@ -55,7 +76,7 @@ export default function FormTambahData() {
               id="nama"
               type="text"
               placeholder="Nama"
-              value={nama}
+              value={nama1 || ""}
               onChange={(e) => setNama(e.target.value)}
             />
           </div>
@@ -69,7 +90,7 @@ export default function FormTambahData() {
               id="kelas"
               type="text"
               placeholder="Kelas"
-              value={kelas}
+              value={kelas1 || ""}
               onChange={(e) => setKelas(e.target.value)}
             />
           </div>
@@ -79,7 +100,7 @@ export default function FormTambahData() {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              Tambah Data
+              Edit Data
             </button>
           </div>
         </form>
@@ -87,3 +108,5 @@ export default function FormTambahData() {
     </div>
   );
 }
+
+export default FormEditData;

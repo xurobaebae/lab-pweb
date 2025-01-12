@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DataMahasiswaPage from "./pages/DataMahasiswaPage";
 import React from "react";
 import TambahDataPage from "./pages/TambahDataPage";
+import EditDataPage from "./pages/EditDataPage";
 import "./styles.css";
 
 //blok2
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/data_mhs" element={<DataMahasiswaPage />} />
         <Route path="/tambah_data" element={<TambahDataPage />} />
+        <Route path="/edit_data/:id" element={<EditDataPage />} />
       </Routes>
     </BrowserRouter>
   );

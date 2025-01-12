@@ -1,18 +1,18 @@
-// blok1
 import React from "react";
-import FormTambahData from "../components/FormTambahData";
 import Layout from "./Layout";
+import FormEditData from "../components/FormEditData";
 
-// blok2
-export default function TambahDataPage() {
+const EditDataPage = () => {
   return (
     <Layout>
       <div className="flex w-full justify-center items-center">
-        <h1 className="text-3xl font-semibold mt-5">Tambah Data Mahasiswa</h1>
+        <h1 className="text-3xl font-semibold mt-5">Edit Data Mahasiswa</h1>
       </div>
       <div className="flex mt-10 justify-center">
-        <FormTambahData />
+        <FormEditData />
       </div>
     </Layout>
   );
-}
+};
+
+export default EditDataPage;

@@ -13,63 +13,81 @@ const Table = () => {
   const getData = async () => {
     try {
       const response = await axios.get("http://localhost/PWEB/lab-pweb/ACT1_PHP/read.php");
-      console.log("Response: ", response); // Log respons dari server
-      if (response.data.status === 'success' && response.data.data.length > 0) {
+      if (response.data.data.length > 0) {
         setMahasiswaData(response.data.data);
-      } else {
-        setMsg(response.data.message || "Gagal mengambil data mahasiswa");
-        setIsError(true);
+        console.log(response.data.data);
       }
     } catch (error) {
-      console.error("Error: ", error);
-      setMsg("Gagal mengambil data mahasiswa");
-      setIsError(true);
+      console.error("Error: " + error);
     }
+  };
+
+  const deleteMhs = async(mhsId) => {
+    try{
+      await axios.delete("http://localhost/PWEB/lab-pweb/ACT1_PHP/delete.php/" + mhsId)
+      setMsg("Data Berhasil Dihapus");
+      window.location.href = '/data_mhs'
+    }catch(error){
+      console.log("Error :" + error);
+    }
+
   };
 
   return (
     <div className="p-6 flex flex-col justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-full md:w-2/3">
         <h1 className="text-center text-2xl font-bold mb-6">Data Mahasiswa</h1>
-        {isError && (
-          <div className="mb-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
-            <p>{msg}</p>
-          </div>
-        )}
-        <button className="bg-green-500 text-white px-3 py-2 text-sm rounded hover:bg-green-600 mb-4">
-          <a href="/tambah_data">Tambah Data</a>
-        </button>
-        <table className="table">
+        <div className="flex justify-center mb-4">
+          <button className="bg-green-500 text-white px-3 py-2 text-sm rounded hover:bg-green-600">
+            <a href="/tambah_data">Tambah Data</a>
+          </button>
+        </div>
+        <table className="min-w-full border-collapse">
           <thead className="bg-gray-200">
             <tr>
-              <th className="py-2 px-4 border-b-2 border-gray-300">No</th>
-              <th className="py-2 px-4 border-b-2 border-gray-300">NPM</th>
-              <th className="py-2 px-4 border-b-2 border-gray-300">Nama</th>
-              <th className="py-2 px-4 border-b-2 border-gray-300">Kelas</th>
-              <th className="py-2 px-4 border-b-2 border-gray-300">Action</th>
+              <th className="py-2 px-4 border border-gray-300">No</th>
+              <th className="py-2 px-4 border border-gray-300">NPM</th>
+              <th className="py-2 px-4 border border-gray-300">Nama</th>
+              <th className="py-2 px-4 border border-gray-300">Kelas</th>
+              <th className="py-2 px-4 border border-gray-300">Action</th>
             </tr>
           </thead>
           <tbody>
             {mahasiswaData.length > 0 ? (
               mahasiswaData.map((item, index) => (
                 <tr key={item.id} className="text-center border-b border-gray-200 hover:bg-gray-50">
-                  <td className="py-2 px-4">{index + 1}</td> {/* NOMOR */}
-                  <td className="py-2 px-4">{item.npm}</td> {/* NPM */}
-                  <td className="py-2 px-4">{item.nama}</td> {/* NAMA */}
-                  <td className="py-2 px-4">{item.kelas}</td> {/* KELAS */}
-                  <td className="py-2 px-4 flex justify-center space-x-2">
-                    <button className="bg-blue-500 text-white px-2 py-1 text-sm rounded hover:bg-blue-600">
-                      Edit
-                    </button>
-                    <button className="bg-red-500 text-white px-2 py-1 text-sm rounded hover:bg-red-600">
-                      Delete
-                    </button>
+                  <td className="py-2 px-4 border border-gray-300">{index + 1}</td>
+                  <td className="py-2 px-4 border border-gray-300">{item.npm}</td>
+                  <td className="py-2 px-4 border border-gray-300">{item.nama}</td>
+                  <td className="py-2 px-4 border border-gray-300">{item.kelas}</td>
+                  <td className="py-2 px-4 border border-gray-300">
+                    <div className="flex justify-center space-x-2">
+                      <a href={`/edit_data/${item.id}`}> 
+                      <button className="bg-blue-500 text-white px-2 py-1 text-sm rounded hover:bg-blue-600">
+                        Edit
+                      </button>
+                      </a>
+                      
+                      <button
+                        onClick={()=>{
+                          if (
+                          window.confirm(
+                            "Apakah Anda Yakin ingin menghapus mahasiswa ini?"
+                          )
+                        ){
+                          deleteMhs(item.id);
+                        }
+                        }}
+                      className="bg-red-500 text-white px-2 py-1 text-sm rounded hover:bg-red-600">
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="border p-2 text-center">
+                <td colSpan="5" className="py-2 px-4 border border-gray-300 text-center">
                   Data Mahasiswa tidak tersedia.
                 </td>
               </tr>
